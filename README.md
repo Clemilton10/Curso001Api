@@ -2,7 +2,7 @@
 
 Original
 
-```c#
+```csharp
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddControllers();

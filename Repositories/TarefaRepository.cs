@@ -5,7 +5,8 @@ namespace Curso001Api.Repositories
 {
 	public interface ITarefaRepository
 	{
-		Task<IEnumerable<Tarefa>> Read(int Id);
+		Task<Tarefa> OneRead(int UsuarioId, int Id);
+		Task<IEnumerable<Tarefa>> Read(int UsuarioId);
 		Task Create(Tarefa tarefa);
 		Task Delete(int Id);
 		Task Update(Tarefa tarefa);
@@ -17,9 +18,27 @@ namespace Curso001Api.Repositories
 		{
 			_context = context;
 		}
-		public async Task<IEnumerable<Tarefa>> Read(int Id)
+		public async Task<Tarefa> OneRead(int UsuarioId, int Id)
 		{
-			return await _context.Tarefas.Where(tarefa => tarefa.UsuarioId == Id).ToListAsync();
+			//return await _context.Tarefas.FindAsync(Id);
+			Tarefa tarefa = await _context.Tarefas
+				.Where(tarefa => tarefa.UsuarioId == UsuarioId && tarefa.Id == Id)
+				.FirstOrDefaultAsync();
+
+			if (tarefa != null)
+			{
+				return tarefa;
+			}
+			else
+			{
+				return new Tarefa();
+			}
+		}
+		public async Task<IEnumerable<Tarefa>> Read(int UsuarioId)
+		{
+			return await _context.Tarefas
+				.Where(tarefa => tarefa.UsuarioId == UsuarioId)
+				.ToListAsync();
 		}
 		public async Task Create(Tarefa tarefa)
 		{

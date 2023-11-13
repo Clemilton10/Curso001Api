@@ -14,9 +14,17 @@ namespace Curso001Api.Controllers
 		//[AllowAnonymous]
 		public async Task<IActionResult> Read([FromServices] ITarefaRepository repository)
 		{
-			var id = Convert.ToInt32(User.Identity.Name);
-			var tarefas = await repository.Read(id);
+			var UsuarioId = Convert.ToInt32(User.Identity.Name);
+			var tarefas = await repository.Read(UsuarioId);
 			return Ok(tarefas);
+		}
+		[HttpGet("{Id}")]
+		//[AllowAnonymous]
+		public async Task<IActionResult> OneRead(int Id, [FromServices] ITarefaRepository repository)
+		{
+			var UsuarioId = Convert.ToInt32(User.Identity.Name);
+			var tarefa = await repository.OneRead(UsuarioId, Id);
+			return Ok(tarefa);
 		}
 		[HttpPost]
 		public async Task<IActionResult> Create([FromBody] TarefaBase tarefa, [FromServices] ITarefaRepository repository)
@@ -24,11 +32,11 @@ namespace Curso001Api.Controllers
 			if (!ModelState.IsValid)
 				return BadRequest();
 
-			var id = Convert.ToInt32(User.Identity.Name);
+			var UsuarioId = Convert.ToInt32(User.Identity.Name);
 			Tarefa t = new Tarefa();
 			t.Nome = tarefa.Nome;
 			t.Concluida = tarefa.Concluida;
-			t.UsuarioId = id;
+			t.UsuarioId = UsuarioId;
 			await repository.Create(t);
 			return Ok(t);
 		}
@@ -38,10 +46,10 @@ namespace Curso001Api.Controllers
 			if (!ModelState.IsValid)
 				return BadRequest();
 
-			var uid = Convert.ToInt32(User.Identity.Name);
+			var UsuarioId = Convert.ToInt32(User.Identity.Name);
 			Tarefa t = new Tarefa();
 			t.Id = Id;
-			t.UsuarioId = uid;
+			t.UsuarioId = UsuarioId;
 			t.Nome = tarefa.Nome;
 			t.Concluida = tarefa.Concluida;
 			await repository.Update(t);
