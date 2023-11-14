@@ -49,3 +49,36 @@ dotnet clean
 # Executar
 dotnet watch run
 ```
+
+# Swagger Comments
+
+Curso001Api.csproj
+
+```xml
+<Project Sdk="Microsoft.NET.Sdk.Web">
+	<PropertyGroup>
+		<GenerateDocumentationFile>true</GenerateDocumentationFile>
+	</PropertyGroup>
+</Project>
+```
+
+Program.cs
+
+```csharp
+var filePath = Path.Combine(System.AppContext.BaseDirectory, "Curso001Api.xml");
+c.IncludeXmlComments(filePath);
+```
+
+Controllers
+
+```csharp
+/// <summary>
+/// Enter description for method AnotherMethod.
+/// ID string generated is "M:MyNamespace.MyClass.AnotherMethod(System.Int16[],System.Int32[0:,0:])".
+/// </summary>
+/// <param name="array1">Describe parameter.</param>
+/// <param name="array">Describe parameter.</param>
+/// <returns>Describe return value.</returns>
+[Route("usuarios")]
+[ApiController]
+```

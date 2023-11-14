@@ -28,4 +28,9 @@ namespace Curso001Api.Models
 		[Required]
 		public string Senha { get; set; } = string.Empty;
 	}
+	public class UsuarioLoged
+	{
+		public Usuario usuario { get; set; }
+		public string token { get; set; } = string.Empty;
+	}
 }

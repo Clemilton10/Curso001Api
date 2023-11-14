@@ -50,7 +50,11 @@ if (builder.Environment.IsDevelopment())
 	builder.Services.AddEndpointsApiExplorer();
 	builder.Services.AddSwaggerGen(c =>
 	{
-		c.SwaggerDoc("v1", new OpenApiInfo { Title = "Pessoa API", Version = "v1" });
+		c.SwaggerDoc("v1", new OpenApiInfo { Title = "Curso API", Version = "v1" });
+
+		var filePath = Path.Combine(System.AppContext.BaseDirectory, "Curso001Api.xml");
+		c.IncludeXmlComments(filePath);
+
 		// Authorization in swagger
 		c.AddSecurityDefinition(
 			"Bearer",
@@ -101,7 +105,7 @@ if (app.Environment.IsDevelopment())
 	// Swagger na Home(so- na webapi)
 	app.UseSwaggerUI(c =>
 	{
-		c.SwaggerEndpoint("/swagger/v1/swagger.json", "PessoaApi");
+		c.SwaggerEndpoint("/swagger/v1/swagger.json", "CursoApi");
 	});
 	// Sem o Swagger na Home
 	//app.UseSwaggerUI();
